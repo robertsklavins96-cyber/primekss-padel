@@ -1,0 +1,97 @@
+.match-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  box-shadow: var(--shadow-card);
+}
+
+.match-card--completed {
+  border-color: rgba(127, 224, 167, 0.35);
+}
+
+.match-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--color-text-dim);
+}
+
+.match-card__court {
+  font-weight: 700;
+  color: var(--color-text);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.match-card__time {
+  flex: 1;
+}
+
+.match-card__body {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 10px;
+}
+
+.match-card__team {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.match-card__team:last-child {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.match-card__players {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-dim);
+  overflow-wrap: break-word;
+}
+
+.match-card__team--win .match-card__players {
+  color: var(--color-text);
+}
+
+.match-card__score {
+  font-family: var(--font-display);
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-text-faint);
+}
+
+.match-card__team--win .match-card__score {
+  color: var(--color-ball);
+}
+
+.match-card__vs {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-text-faint);
+  text-transform: uppercase;
+}
+
+.match-card__override {
+  margin-top: 12px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 122, 69, 0.14);
+  color: var(--color-clay);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.match-card__actions {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--color-line);
+}
