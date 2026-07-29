@@ -9,8 +9,6 @@ import {
   updateDoc,
   deleteDoc,
   writeBatch,
-  query,
-  orderBy,
   type Unsubscribe,
 } from 'firebase/firestore';
 import { db, TOURNAMENT_ID } from './config';
@@ -130,9 +128,13 @@ export function subscribeTournament(callback: (t: Tournament | null) => void): U
 }
 
 export function subscribeMatches(callback: (matches: Match[]) => void): Unsubscribe {
-  const q = query(matchesCol(), orderBy('roundNumber'), orderBy('courtNumber'));
-  return onSnapshot(q, (snap) => {
-    callback(snap.docs.map((d) => ({ id: d.id, ...(d.data() as Omit<Match, 'id'>) })));
+  // No orderBy() here on purpose: sorting on two fields server-side would
+  // require a composite Firestore index to be created manually. Sorting the
+  // (small, 24-item) result client-side avoids that setup step entirely.
+  return onSnapshot(matchesCol(), (snap) => {
+    const matches = snap.docs.map((d) => ({ id: d.id, ...(d.data() as Omit<Match, 'id'>) }));
+    matches.sort((a, b) => a.roundNumber - b.roundNumber || a.courtNumber - b.courtNumber);
+    callback(matches);
   });
 }
 
