@@ -1,26 +1,30 @@
 import type { Player, ScheduleEntry } from '../types';
 
-// Fixed player roster. Latvian characters (ā) must be preserved exactly.
+// Fixed player roster. Latvian characters (ā, ī, š, etc.) must be preserved exactly.
 export const PLAYERS: Player[] = [
-  { id: 'pavels', name: 'Pavels' },
-  { id: 'roberts', name: 'Roberts' },
-  { id: 'ulvis', name: 'Ulvis' },
-  { id: 'atis', name: 'Atis' },
-  { id: 'nauris', name: 'Nauris' },
-  { id: 'kaspars', name: 'Kaspars' },
-  { id: 'dinars', name: 'Dinārs' },
-  { id: 'gints', name: 'Gints' },
-  { id: 'markuss', name: 'Markuss' },
-  { id: 'maris', name: 'Māris' },
-  { id: 'aleksejs', name: 'Aleksejs' },
-  { id: 'aleksandrs', name: 'Aleksandrs' },
+  { id: "maris", name: "Māris" },
+  { id: "artjoms", name: "Artjoms" },
+  { id: "ulvis", name: "Ulvis" },
+  { id: "markuss", name: "Markuss" },
+  { id: "kaspars", name: "Kaspars" },
+  { id: "atis", name: "Atis" },
+  { id: "gints", name: "Gints" },
+  { id: "edgars", name: "Edgars" },
+  { id: "roberts", name: "Roberts" },
+  { id: "pavels", name: "Pāvels" },
+  { id: "emilija", name: "Emīlija" },
+  { id: "nauris", name: "Nauris" },
+  { id: "davis", name: "Dāvis" },
+  { id: "rudolfs", name: "Rudolfs" },
+  { id: "regnars", name: "Regnārs" },
+  { id: "juris", name: "Juris" },
 ];
 
 export const TOURNAMENT_NAME = 'Americano Padel Tournament';
 export const TOURNAMENT_START_TIME = '16:30';
 export const TOURNAMENT_END_TIME = '19:00';
-export const NUMBER_OF_PLAYERS = 12;
-export const NUMBER_OF_COURTS = 3;
+export const NUMBER_OF_PLAYERS = 16;
+export const NUMBER_OF_COURTS = 4;
 export const NUMBER_OF_ROUNDS = 8;
 export const POINTS_PER_MATCH = 21;
 
@@ -42,48 +46,58 @@ export interface FixedBreakDef {
   endTime: string;
 }
 
-// The exact, fixed schedule as specified. This is the source of truth and
-// must never be replaced by a generated schedule.
+// The exact, fixed schedule generated for the 16-player / 4-court format:
+// every player plays all 8 rounds, no repeated partnerships, no opponent
+// pairing occurs more than twice, and teams are balanced by skill level.
 export const FIXED_MATCHES: FixedMatchDef[] = [
   // Round 1: 16:30-16:45
-  { id: 'round-1-court-1', roundNumber: 1, courtNumber: 1, startTime: '16:30', endTime: '16:45', team1: ['pavels', 'nauris'], team2: ['roberts', 'aleksejs'] },
-  { id: 'round-1-court-2', roundNumber: 1, courtNumber: 2, startTime: '16:30', endTime: '16:45', team1: ['ulvis', 'aleksandrs'], team2: ['kaspars', 'dinars'] },
-  { id: 'round-1-court-3', roundNumber: 1, courtNumber: 3, startTime: '16:30', endTime: '16:45', team1: ['atis', 'gints'], team2: ['markuss', 'maris'] },
+  { id: "round-1-court-1", roundNumber: 1, courtNumber: 1, startTime: "16:30", endTime: "16:45", team1: ["nauris", "roberts"], team2: ["atis", "rudolfs"] },
+  { id: "round-1-court-2", roundNumber: 1, courtNumber: 2, startTime: "16:30", endTime: "16:45", team1: ["regnars", "pavels"], team2: ["kaspars", "ulvis"] },
+  { id: "round-1-court-3", roundNumber: 1, courtNumber: 3, startTime: "16:30", endTime: "16:45", team1: ["emilija", "davis"], team2: ["markuss", "gints"] },
+  { id: "round-1-court-4", roundNumber: 1, courtNumber: 4, startTime: "16:30", endTime: "16:45", team1: ["maris", "artjoms"], team2: ["edgars", "juris"] },
 
   // Round 2: 16:45-17:00
-  { id: 'round-2-court-1', roundNumber: 2, courtNumber: 1, startTime: '16:45', endTime: '17:00', team1: ['pavels', 'aleksejs'], team2: ['atis', 'kaspars'] },
-  { id: 'round-2-court-2', roundNumber: 2, courtNumber: 2, startTime: '16:45', endTime: '17:00', team1: ['roberts', 'gints'], team2: ['aleksandrs', 'dinars'] },
-  { id: 'round-2-court-3', roundNumber: 2, courtNumber: 3, startTime: '16:45', endTime: '17:00', team1: ['ulvis', 'maris'], team2: ['nauris', 'markuss'] },
+  { id: "round-2-court-1", roundNumber: 2, courtNumber: 1, startTime: "16:45", endTime: "17:00", team1: ["rudolfs", "pavels"], team2: ["edgars", "ulvis"] },
+  { id: "round-2-court-2", roundNumber: 2, courtNumber: 2, startTime: "16:45", endTime: "17:00", team1: ["kaspars", "nauris"], team2: ["roberts", "maris"] },
+  { id: "round-2-court-3", roundNumber: 2, courtNumber: 3, startTime: "16:45", endTime: "17:00", team1: ["emilija", "atis"], team2: ["markuss", "davis"] },
+  { id: "round-2-court-4", roundNumber: 2, courtNumber: 4, startTime: "16:45", endTime: "17:00", team1: ["juris", "gints"], team2: ["artjoms", "regnars"] },
 
   // Round 3: 17:00-17:15
-  { id: 'round-3-court-1', roundNumber: 3, courtNumber: 1, startTime: '17:00', endTime: '17:15', team1: ['pavels', 'kaspars'], team2: ['maris', 'dinars'] },
-  { id: 'round-3-court-2', roundNumber: 3, courtNumber: 2, startTime: '17:00', endTime: '17:15', team1: ['roberts', 'atis'], team2: ['ulvis', 'gints'] },
-  { id: 'round-3-court-3', roundNumber: 3, courtNumber: 3, startTime: '17:00', endTime: '17:15', team1: ['nauris', 'aleksejs'], team2: ['aleksandrs', 'markuss'] },
+  { id: "round-3-court-1", roundNumber: 3, courtNumber: 1, startTime: "17:00", endTime: "17:15", team1: ["maris", "regnars"], team2: ["artjoms", "kaspars"] },
+  { id: "round-3-court-2", roundNumber: 3, courtNumber: 2, startTime: "17:00", endTime: "17:15", team1: ["roberts", "markuss"], team2: ["davis", "pavels"] },
+  { id: "round-3-court-3", roundNumber: 3, courtNumber: 3, startTime: "17:00", endTime: "17:15", team1: ["gints", "ulvis"], team2: ["juris", "atis"] },
+  { id: "round-3-court-4", roundNumber: 3, courtNumber: 4, startTime: "17:00", endTime: "17:15", team1: ["rudolfs", "emilija"], team2: ["edgars", "nauris"] },
 
   // Round 4: 17:15-17:30
-  { id: 'round-4-court-1', roundNumber: 4, courtNumber: 1, startTime: '17:15', endTime: '17:30', team1: ['pavels', 'gints'], team2: ['ulvis', 'nauris'] },
-  { id: 'round-4-court-2', roundNumber: 4, courtNumber: 2, startTime: '17:15', endTime: '17:30', team1: ['roberts', 'dinars'], team2: ['maris', 'aleksejs'] },
-  { id: 'round-4-court-3', roundNumber: 4, courtNumber: 3, startTime: '17:15', endTime: '17:30', team1: ['atis', 'markuss'], team2: ['kaspars', 'aleksandrs'] },
+  { id: "round-4-court-1", roundNumber: 4, courtNumber: 1, startTime: "17:15", endTime: "17:30", team1: ["artjoms", "juris"], team2: ["emilija", "kaspars"] },
+  { id: "round-4-court-2", roundNumber: 4, courtNumber: 2, startTime: "17:15", endTime: "17:30", team1: ["davis", "regnars"], team2: ["rudolfs", "nauris"] },
+  { id: "round-4-court-3", roundNumber: 4, courtNumber: 3, startTime: "17:15", endTime: "17:30", team1: ["markuss", "pavels"], team2: ["atis", "gints"] },
+  { id: "round-4-court-4", roundNumber: 4, courtNumber: 4, startTime: "17:15", endTime: "17:30", team1: ["roberts", "edgars"], team2: ["maris", "ulvis"] },
 
-  // Round 5: 17:45-18:00 (after Break 1)
-  { id: 'round-5-court-1', roundNumber: 5, courtNumber: 1, startTime: '17:45', endTime: '18:00', team1: ['kaspars', 'maris'], team2: ['gints', 'aleksejs'] },
-  { id: 'round-5-court-2', roundNumber: 5, courtNumber: 2, startTime: '17:45', endTime: '18:00', team1: ['atis', 'dinars'], team2: ['roberts', 'nauris'] },
-  { id: 'round-5-court-3', roundNumber: 5, courtNumber: 3, startTime: '17:45', endTime: '18:00', team1: ['ulvis', 'markuss'], team2: ['pavels', 'aleksandrs'] },
+  // Round 5: 17:45-18:00
+  { id: "round-5-court-1", roundNumber: 5, courtNumber: 1, startTime: "17:45", endTime: "18:00", team1: ["artjoms", "edgars"], team2: ["markuss", "emilija"] },
+  { id: "round-5-court-2", roundNumber: 5, courtNumber: 2, startTime: "17:45", endTime: "18:00", team1: ["kaspars", "juris"], team2: ["gints", "roberts"] },
+  { id: "round-5-court-3", roundNumber: 5, courtNumber: 3, startTime: "17:45", endTime: "18:00", team1: ["atis", "nauris"], team2: ["ulvis", "regnars"] },
+  { id: "round-5-court-4", roundNumber: 5, courtNumber: 4, startTime: "17:45", endTime: "18:00", team1: ["pavels", "maris"], team2: ["rudolfs", "davis"] },
 
   // Round 6: 18:00-18:15
-  { id: 'round-6-court-1', roundNumber: 6, courtNumber: 1, startTime: '18:00', endTime: '18:15', team1: ['nauris', 'maris'], team2: ['atis', 'aleksandrs'] },
-  { id: 'round-6-court-2', roundNumber: 6, courtNumber: 2, startTime: '18:00', endTime: '18:15', team1: ['markuss', 'aleksejs'], team2: ['ulvis', 'dinars'] },
-  { id: 'round-6-court-3', roundNumber: 6, courtNumber: 3, startTime: '18:00', endTime: '18:15', team1: ['kaspars', 'gints'], team2: ['pavels', 'roberts'] },
+  { id: "round-6-court-1", roundNumber: 6, courtNumber: 1, startTime: "18:00", endTime: "18:15", team1: ["regnars", "juris"], team2: ["edgars", "pavels"] },
+  { id: "round-6-court-2", roundNumber: 6, courtNumber: 2, startTime: "18:00", endTime: "18:15", team1: ["rudolfs", "ulvis"], team2: ["kaspars", "markuss"] },
+  { id: "round-6-court-3", roundNumber: 6, courtNumber: 3, startTime: "18:00", endTime: "18:15", team1: ["maris", "gints"], team2: ["emilija", "roberts"] },
+  { id: "round-6-court-4", roundNumber: 6, courtNumber: 4, startTime: "18:00", endTime: "18:15", team1: ["davis", "nauris"], team2: ["artjoms", "atis"] },
 
-  // Round 7: 18:30-18:45 (after Break 2)
-  { id: 'round-7-court-1', roundNumber: 7, courtNumber: 1, startTime: '18:30', endTime: '18:45', team1: ['roberts', 'aleksandrs'], team2: ['atis', 'aleksejs'] },
-  { id: 'round-7-court-2', roundNumber: 7, courtNumber: 2, startTime: '18:30', endTime: '18:45', team1: ['pavels', 'markuss'], team2: ['gints', 'maris'] },
-  { id: 'round-7-court-3', roundNumber: 7, courtNumber: 3, startTime: '18:30', endTime: '18:45', team1: ['nauris', 'dinars'], team2: ['ulvis', 'kaspars'] },
+  // Round 7: 18:30-18:45
+  { id: "round-7-court-1", roundNumber: 7, courtNumber: 1, startTime: "18:30", endTime: "18:45", team1: ["pavels", "emilija"], team2: ["davis", "juris"] },
+  { id: "round-7-court-2", roundNumber: 7, courtNumber: 2, startTime: "18:30", endTime: "18:45", team1: ["regnars", "markuss"], team2: ["roberts", "ulvis"] },
+  { id: "round-7-court-3", roundNumber: 7, courtNumber: 3, startTime: "18:30", endTime: "18:45", team1: ["artjoms", "nauris"], team2: ["kaspars", "edgars"] },
+  { id: "round-7-court-4", roundNumber: 7, courtNumber: 4, startTime: "18:30", endTime: "18:45", team1: ["gints", "rudolfs"], team2: ["atis", "maris"] },
 
   // Round 8: 18:45-19:00
-  { id: 'round-8-court-1', roundNumber: 8, courtNumber: 1, startTime: '18:45', endTime: '19:00', team1: ['nauris', 'aleksandrs'], team2: ['pavels', 'maris'] },
-  { id: 'round-8-court-2', roundNumber: 8, courtNumber: 2, startTime: '18:45', endTime: '19:00', team1: ['roberts', 'kaspars'], team2: ['ulvis', 'atis'] },
-  { id: 'round-8-court-3', roundNumber: 8, courtNumber: 3, startTime: '18:45', endTime: '19:00', team1: ['aleksejs', 'dinars'], team2: ['gints', 'markuss'] },
+  { id: "round-8-court-1", roundNumber: 8, courtNumber: 1, startTime: "18:45", endTime: "19:00", team1: ["juris", "pavels"], team2: ["edgars", "atis"] },
+  { id: "round-8-court-2", roundNumber: 8, courtNumber: 2, startTime: "18:45", endTime: "19:00", team1: ["maris", "markuss"], team2: ["artjoms", "gints"] },
+  { id: "round-8-court-3", roundNumber: 8, courtNumber: 3, startTime: "18:45", endTime: "19:00", team1: ["nauris", "regnars"], team2: ["roberts", "davis"] },
+  { id: "round-8-court-4", roundNumber: 8, courtNumber: 4, startTime: "18:45", endTime: "19:00", team1: ["rudolfs", "kaspars"], team2: ["ulvis", "emilija"] },
+
 ];
 
 export const FIXED_BREAKS: FixedBreakDef[] = [
@@ -92,14 +106,14 @@ export const FIXED_BREAKS: FixedBreakDef[] = [
 ];
 
 export const ROUND_TIMES: { roundNumber: number; startTime: string; endTime: string }[] = [
-  { roundNumber: 1, startTime: '16:30', endTime: '16:45' },
-  { roundNumber: 2, startTime: '16:45', endTime: '17:00' },
-  { roundNumber: 3, startTime: '17:00', endTime: '17:15' },
-  { roundNumber: 4, startTime: '17:15', endTime: '17:30' },
-  { roundNumber: 5, startTime: '17:45', endTime: '18:00' },
-  { roundNumber: 6, startTime: '18:00', endTime: '18:15' },
-  { roundNumber: 7, startTime: '18:30', endTime: '18:45' },
-  { roundNumber: 8, startTime: '18:45', endTime: '19:00' },
+  { roundNumber: 1, startTime: "16:30", endTime: "16:45" },
+  { roundNumber: 2, startTime: "16:45", endTime: "17:00" },
+  { roundNumber: 3, startTime: "17:00", endTime: "17:15" },
+  { roundNumber: 4, startTime: "17:15", endTime: "17:30" },
+  { roundNumber: 5, startTime: "17:45", endTime: "18:00" },
+  { roundNumber: 6, startTime: "18:00", endTime: "18:15" },
+  { roundNumber: 7, startTime: "18:30", endTime: "18:45" },
+  { roundNumber: 8, startTime: "18:45", endTime: "19:00" },
 ];
 
 // Merged, time-ordered schedule (rounds + breaks) for display purposes.
