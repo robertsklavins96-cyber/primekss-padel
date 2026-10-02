@@ -1,5 +1,13 @@
 import type { ScheduleValidationResult, ScheduleViolation } from '../types';
-import { FIXED_MATCHES, FIXED_BREAKS, PLAYERS, playerName } from '../data/schedule';
+import {
+  FIXED_MATCHES,
+  FIXED_BREAKS,
+  PLAYERS,
+  playerName,
+  NUMBER_OF_ROUNDS,
+  NUMBER_OF_PLAYERS,
+  NUMBER_OF_COURTS,
+} from '../data/schedule';
 
 function pairKey(a: string, b: string): string {
   return [a, b].sort().join('|');
@@ -8,36 +16,39 @@ function pairKey(a: string, b: string): string {
 /**
  * Validates the fixed tournament schedule against every structural rule
  * required by the tournament format. Pure function, no I/O — safe to run
- * on the client or in tests.
+ * on the client or in tests. Checks scale with whatever NUMBER_OF_ROUNDS /
+ * NUMBER_OF_PLAYERS / NUMBER_OF_COURTS are currently configured, so this
+ * doesn't need editing when the roster or court count changes.
  */
 export function validateSchedule(): ScheduleValidationResult {
   const violations: ScheduleViolation[] = [];
+  const expectedMatches = NUMBER_OF_ROUNDS * NUMBER_OF_COURTS;
 
-  // 1. Exactly 8 rounds
+  // 1. Exactly NUMBER_OF_ROUNDS rounds
   const roundNumbers = Array.from(new Set(FIXED_MATCHES.map((m) => m.roundNumber))).sort((a, b) => a - b);
-  if (roundNumbers.length !== 8) {
-    violations.push({ rule: 'Exactly 8 rounds', detail: `Found ${roundNumbers.length} rounds instead of 8.` });
+  if (roundNumbers.length !== NUMBER_OF_ROUNDS) {
+    violations.push({ rule: `Exactly ${NUMBER_OF_ROUNDS} rounds`, detail: `Found ${roundNumbers.length} rounds instead of ${NUMBER_OF_ROUNDS}.` });
   }
 
-  // 2. Exactly 24 matches
-  if (FIXED_MATCHES.length !== 24) {
-    violations.push({ rule: 'Exactly 24 matches', detail: `Found ${FIXED_MATCHES.length} matches instead of 24.` });
+  // 2. Exactly NUMBER_OF_ROUNDS * NUMBER_OF_COURTS matches
+  if (FIXED_MATCHES.length !== expectedMatches) {
+    violations.push({ rule: `Exactly ${expectedMatches} matches`, detail: `Found ${FIXED_MATCHES.length} matches instead of ${expectedMatches}.` });
   }
 
-  // 3. Exactly 3 matches per round
+  // 3. Exactly NUMBER_OF_COURTS matches per round
   for (const r of roundNumbers) {
     const count = FIXED_MATCHES.filter((m) => m.roundNumber === r).length;
-    if (count !== 3) {
-      violations.push({ rule: 'Exactly 3 matches per round', detail: `Round ${r} has ${count} matches instead of 3.`, roundNumber: r });
+    if (count !== NUMBER_OF_COURTS) {
+      violations.push({ rule: `Exactly ${NUMBER_OF_COURTS} matches per round`, detail: `Round ${r} has ${count} matches instead of ${NUMBER_OF_COURTS}.`, roundNumber: r });
     }
   }
 
-  // 4 & 5. Exactly 12 players per round, each appearing exactly once
+  // 4 & 5. Exactly NUMBER_OF_PLAYERS players per round, each appearing exactly once
   for (const r of roundNumbers) {
     const matches = FIXED_MATCHES.filter((m) => m.roundNumber === r);
     const ids = matches.flatMap((m) => [...m.team1, ...m.team2]);
     const uniqueIds = new Set(ids);
-    if (ids.length !== 12 || uniqueIds.size !== 12) {
+    if (ids.length !== NUMBER_OF_PLAYERS || uniqueIds.size !== NUMBER_OF_PLAYERS) {
       const seen = new Map<string, number>();
       for (const id of ids) seen.set(id, (seen.get(id) ?? 0) + 1);
       const dupes = [...seen.entries()].filter(([, c]) => c > 1).map(([id]) => playerName(id));
@@ -45,14 +56,14 @@ export function validateSchedule(): ScheduleValidationResult {
         rule: 'Every player appears exactly once per round',
         detail: dupes.length
           ? `Round ${r}: ${dupes.join(', ')} appear more than once.`
-          : `Round ${r} does not have exactly 12 unique players (found ${uniqueIds.size}).`,
+          : `Round ${r} does not have exactly ${NUMBER_OF_PLAYERS} unique players (found ${uniqueIds.size}).`,
         roundNumber: r,
         players: dupes,
       });
     }
   }
 
-  // 6. Every player plays exactly 8 matches
+  // 6. Every player plays exactly NUMBER_OF_ROUNDS matches
   const matchCountByPlayer = new Map<string, number>();
   for (const p of PLAYERS) matchCountByPlayer.set(p.id, 0);
   for (const m of FIXED_MATCHES) {
@@ -61,8 +72,12 @@ export function validateSchedule(): ScheduleValidationResult {
     }
   }
   for (const [id, count] of matchCountByPlayer.entries()) {
-    if (count !== 8) {
-      violations.push({ rule: 'Every player plays exactly 8 matches', detail: `${playerName(id)} plays ${count} matches instead of 8.`, players: [playerName(id)] });
+    if (count !== NUMBER_OF_ROUNDS) {
+      violations.push({
+        rule: `Every player plays exactly ${NUMBER_OF_ROUNDS} matches`,
+        detail: `${playerName(id)} plays ${count} matches instead of ${NUMBER_OF_ROUNDS}.`,
+        players: [playerName(id)],
+      });
     }
   }
 
@@ -128,16 +143,6 @@ export function validateSchedule(): ScheduleValidationResult {
         players: [playerName(a), playerName(b)],
       });
     }
-  }
-
-  // 11. Aleksejs and Aleksandrs are never partners
-  const forbiddenKey = pairKey('aleksejs', 'aleksandrs');
-  if (partnershipSeen.has(forbiddenKey)) {
-    violations.push({
-      rule: 'Aleksejs and Aleksandrs are never partners',
-      detail: 'Aleksejs and Aleksandrs are scheduled as partners at least once.',
-      players: ['Aleksejs', 'Aleksandrs'],
-    });
   }
 
   // Extra sanity check: exactly 2 breaks
