@@ -1,12 +1,12 @@
 import type { Player, ScheduleEntry } from '../types';
 
-// Fixed player roster. Latvian characters (ā, ī, š, etc.) must be preserved exactly.
+// Fixed player roster. Latvian characters (ā, ī, š, ņ, etc.) must be preserved exactly.
 export const PLAYERS: Player[] = [
   { id: "maris", name: "Māris" },
   { id: "artjoms", name: "Artjoms" },
   { id: "ulvis", name: "Ulvis" },
   { id: "markuss", name: "Markuss" },
-  { id: "kaspars", name: "Kaspars" },
+  { id: "martins", name: "Mārtiņš" },
   { id: "atis", name: "Atis" },
   { id: "gints", name: "Gints" },
   { id: "edgars", name: "Edgars" },
@@ -51,52 +51,52 @@ export interface FixedBreakDef {
 // pairing occurs more than twice, and teams are balanced by skill level.
 export const FIXED_MATCHES: FixedMatchDef[] = [
   // Round 1: 16:30-16:45
-  { id: "round-1-court-1", roundNumber: 1, courtNumber: 1, startTime: "16:30", endTime: "16:45", team1: ["nauris", "roberts"], team2: ["atis", "rudolfs"] },
-  { id: "round-1-court-2", roundNumber: 1, courtNumber: 2, startTime: "16:30", endTime: "16:45", team1: ["regnars", "pavels"], team2: ["kaspars", "ulvis"] },
-  { id: "round-1-court-3", roundNumber: 1, courtNumber: 3, startTime: "16:30", endTime: "16:45", team1: ["emilija", "davis"], team2: ["markuss", "gints"] },
-  { id: "round-1-court-4", roundNumber: 1, courtNumber: 4, startTime: "16:30", endTime: "16:45", team1: ["maris", "artjoms"], team2: ["edgars", "juris"] },
+  { id: "round-1-court-1", roundNumber: 1, courtNumber: 1, startTime: "16:30", endTime: "16:45", team1: ["davis", "markuss"], team2: ["rudolfs", "ulvis"] },
+  { id: "round-1-court-2", roundNumber: 1, courtNumber: 2, startTime: "16:30", endTime: "16:45", team1: ["emilija", "roberts"], team2: ["maris", "regnars"] },
+  { id: "round-1-court-3", roundNumber: 1, courtNumber: 3, startTime: "16:30", endTime: "16:45", team1: ["martins", "edgars"], team2: ["artjoms", "atis"] },
+  { id: "round-1-court-4", roundNumber: 1, courtNumber: 4, startTime: "16:30", endTime: "16:45", team1: ["pavels", "juris"], team2: ["nauris", "gints"] },
 
   // Round 2: 16:45-17:00
-  { id: "round-2-court-1", roundNumber: 2, courtNumber: 1, startTime: "16:45", endTime: "17:00", team1: ["rudolfs", "pavels"], team2: ["edgars", "ulvis"] },
-  { id: "round-2-court-2", roundNumber: 2, courtNumber: 2, startTime: "16:45", endTime: "17:00", team1: ["kaspars", "nauris"], team2: ["roberts", "maris"] },
-  { id: "round-2-court-3", roundNumber: 2, courtNumber: 3, startTime: "16:45", endTime: "17:00", team1: ["emilija", "atis"], team2: ["markuss", "davis"] },
-  { id: "round-2-court-4", roundNumber: 2, courtNumber: 4, startTime: "16:45", endTime: "17:00", team1: ["juris", "gints"], team2: ["artjoms", "regnars"] },
+  { id: "round-2-court-1", roundNumber: 2, courtNumber: 1, startTime: "16:45", endTime: "17:00", team1: ["juris", "davis"], team2: ["edgars", "atis"] },
+  { id: "round-2-court-2", roundNumber: 2, courtNumber: 2, startTime: "16:45", endTime: "17:00", team1: ["nauris", "pavels"], team2: ["markuss", "roberts"] },
+  { id: "round-2-court-3", roundNumber: 2, courtNumber: 3, startTime: "16:45", endTime: "17:00", team1: ["ulvis", "gints"], team2: ["rudolfs", "martins"] },
+  { id: "round-2-court-4", roundNumber: 2, courtNumber: 4, startTime: "16:45", endTime: "17:00", team1: ["artjoms", "maris"], team2: ["emilija", "regnars"] },
 
   // Round 3: 17:00-17:15
-  { id: "round-3-court-1", roundNumber: 3, courtNumber: 1, startTime: "17:00", endTime: "17:15", team1: ["maris", "regnars"], team2: ["artjoms", "kaspars"] },
-  { id: "round-3-court-2", roundNumber: 3, courtNumber: 2, startTime: "17:00", endTime: "17:15", team1: ["roberts", "markuss"], team2: ["davis", "pavels"] },
-  { id: "round-3-court-3", roundNumber: 3, courtNumber: 3, startTime: "17:00", endTime: "17:15", team1: ["gints", "ulvis"], team2: ["juris", "atis"] },
-  { id: "round-3-court-4", roundNumber: 3, courtNumber: 4, startTime: "17:00", endTime: "17:15", team1: ["rudolfs", "emilija"], team2: ["edgars", "nauris"] },
+  { id: "round-3-court-1", roundNumber: 3, courtNumber: 1, startTime: "17:00", endTime: "17:15", team1: ["edgars", "roberts"], team2: ["rudolfs", "gints"] },
+  { id: "round-3-court-2", roundNumber: 3, courtNumber: 2, startTime: "17:00", endTime: "17:15", team1: ["maris", "atis"], team2: ["pavels", "davis"] },
+  { id: "round-3-court-3", roundNumber: 3, courtNumber: 3, startTime: "17:00", endTime: "17:15", team1: ["markuss", "regnars"], team2: ["artjoms", "martins"] },
+  { id: "round-3-court-4", roundNumber: 3, courtNumber: 4, startTime: "17:00", endTime: "17:15", team1: ["juris", "nauris"], team2: ["ulvis", "emilija"] },
 
   // Round 4: 17:15-17:30
-  { id: "round-4-court-1", roundNumber: 4, courtNumber: 1, startTime: "17:15", endTime: "17:30", team1: ["artjoms", "juris"], team2: ["emilija", "kaspars"] },
-  { id: "round-4-court-2", roundNumber: 4, courtNumber: 2, startTime: "17:15", endTime: "17:30", team1: ["davis", "regnars"], team2: ["rudolfs", "nauris"] },
-  { id: "round-4-court-3", roundNumber: 4, courtNumber: 3, startTime: "17:15", endTime: "17:30", team1: ["markuss", "pavels"], team2: ["atis", "gints"] },
-  { id: "round-4-court-4", roundNumber: 4, courtNumber: 4, startTime: "17:15", endTime: "17:30", team1: ["roberts", "edgars"], team2: ["maris", "ulvis"] },
+  { id: "round-4-court-1", roundNumber: 4, courtNumber: 1, startTime: "17:15", endTime: "17:30", team1: ["roberts", "rudolfs"], team2: ["atis", "martins"] },
+  { id: "round-4-court-2", roundNumber: 4, courtNumber: 2, startTime: "17:15", endTime: "17:30", team1: ["gints", "maris"], team2: ["artjoms", "juris"] },
+  { id: "round-4-court-3", roundNumber: 4, courtNumber: 3, startTime: "17:15", endTime: "17:30", team1: ["edgars", "davis"], team2: ["markuss", "emilija"] },
+  { id: "round-4-court-4", roundNumber: 4, courtNumber: 4, startTime: "17:15", endTime: "17:30", team1: ["nauris", "ulvis"], team2: ["regnars", "pavels"] },
 
   // Round 5: 17:45-18:00
-  { id: "round-5-court-1", roundNumber: 5, courtNumber: 1, startTime: "17:45", endTime: "18:00", team1: ["artjoms", "edgars"], team2: ["markuss", "emilija"] },
-  { id: "round-5-court-2", roundNumber: 5, courtNumber: 2, startTime: "17:45", endTime: "18:00", team1: ["kaspars", "juris"], team2: ["gints", "roberts"] },
-  { id: "round-5-court-3", roundNumber: 5, courtNumber: 3, startTime: "17:45", endTime: "18:00", team1: ["atis", "nauris"], team2: ["ulvis", "regnars"] },
-  { id: "round-5-court-4", roundNumber: 5, courtNumber: 4, startTime: "17:45", endTime: "18:00", team1: ["pavels", "maris"], team2: ["rudolfs", "davis"] },
+  { id: "round-5-court-1", roundNumber: 5, courtNumber: 1, startTime: "17:45", endTime: "18:00", team1: ["regnars", "nauris"], team2: ["gints", "martins"] },
+  { id: "round-5-court-2", roundNumber: 5, courtNumber: 2, startTime: "17:45", endTime: "18:00", team1: ["artjoms", "roberts"], team2: ["emilija", "davis"] },
+  { id: "round-5-court-3", roundNumber: 5, courtNumber: 3, startTime: "17:45", endTime: "18:00", team1: ["edgars", "pavels"], team2: ["juris", "rudolfs"] },
+  { id: "round-5-court-4", roundNumber: 5, courtNumber: 4, startTime: "17:45", endTime: "18:00", team1: ["maris", "ulvis"], team2: ["atis", "markuss"] },
 
   // Round 6: 18:00-18:15
-  { id: "round-6-court-1", roundNumber: 6, courtNumber: 1, startTime: "18:00", endTime: "18:15", team1: ["regnars", "juris"], team2: ["edgars", "pavels"] },
-  { id: "round-6-court-2", roundNumber: 6, courtNumber: 2, startTime: "18:00", endTime: "18:15", team1: ["rudolfs", "ulvis"], team2: ["kaspars", "markuss"] },
-  { id: "round-6-court-3", roundNumber: 6, courtNumber: 3, startTime: "18:00", endTime: "18:15", team1: ["maris", "gints"], team2: ["emilija", "roberts"] },
-  { id: "round-6-court-4", roundNumber: 6, courtNumber: 4, startTime: "18:00", endTime: "18:15", team1: ["davis", "nauris"], team2: ["artjoms", "atis"] },
+  { id: "round-6-court-1", roundNumber: 6, courtNumber: 1, startTime: "18:00", endTime: "18:15", team1: ["emilija", "gints"], team2: ["markuss", "edgars"] },
+  { id: "round-6-court-2", roundNumber: 6, courtNumber: 2, startTime: "18:00", endTime: "18:15", team1: ["martins", "regnars"], team2: ["atis", "pavels"] },
+  { id: "round-6-court-3", roundNumber: 6, courtNumber: 3, startTime: "18:00", endTime: "18:15", team1: ["rudolfs", "maris"], team2: ["artjoms", "davis"] },
+  { id: "round-6-court-4", roundNumber: 6, courtNumber: 4, startTime: "18:00", endTime: "18:15", team1: ["juris", "ulvis"], team2: ["nauris", "roberts"] },
 
   // Round 7: 18:30-18:45
-  { id: "round-7-court-1", roundNumber: 7, courtNumber: 1, startTime: "18:30", endTime: "18:45", team1: ["pavels", "emilija"], team2: ["davis", "juris"] },
-  { id: "round-7-court-2", roundNumber: 7, courtNumber: 2, startTime: "18:30", endTime: "18:45", team1: ["regnars", "markuss"], team2: ["roberts", "ulvis"] },
-  { id: "round-7-court-3", roundNumber: 7, courtNumber: 3, startTime: "18:30", endTime: "18:45", team1: ["artjoms", "nauris"], team2: ["kaspars", "edgars"] },
-  { id: "round-7-court-4", roundNumber: 7, courtNumber: 4, startTime: "18:30", endTime: "18:45", team1: ["gints", "rudolfs"], team2: ["atis", "maris"] },
+  { id: "round-7-court-1", roundNumber: 7, courtNumber: 1, startTime: "18:30", endTime: "18:45", team1: ["atis", "gints"], team2: ["ulvis", "artjoms"] },
+  { id: "round-7-court-2", roundNumber: 7, courtNumber: 2, startTime: "18:30", endTime: "18:45", team1: ["martins", "juris"], team2: ["roberts", "maris"] },
+  { id: "round-7-court-3", roundNumber: 7, courtNumber: 3, startTime: "18:30", endTime: "18:45", team1: ["regnars", "davis"], team2: ["edgars", "nauris"] },
+  { id: "round-7-court-4", roundNumber: 7, courtNumber: 4, startTime: "18:30", endTime: "18:45", team1: ["pavels", "emilija"], team2: ["markuss", "rudolfs"] },
 
   // Round 8: 18:45-19:00
-  { id: "round-8-court-1", roundNumber: 8, courtNumber: 1, startTime: "18:45", endTime: "19:00", team1: ["juris", "pavels"], team2: ["edgars", "atis"] },
-  { id: "round-8-court-2", roundNumber: 8, courtNumber: 2, startTime: "18:45", endTime: "19:00", team1: ["maris", "markuss"], team2: ["artjoms", "gints"] },
-  { id: "round-8-court-3", roundNumber: 8, courtNumber: 3, startTime: "18:45", endTime: "19:00", team1: ["nauris", "regnars"], team2: ["roberts", "davis"] },
-  { id: "round-8-court-4", roundNumber: 8, courtNumber: 4, startTime: "18:45", endTime: "19:00", team1: ["rudolfs", "kaspars"], team2: ["ulvis", "emilija"] },
+  { id: "round-8-court-1", roundNumber: 8, courtNumber: 1, startTime: "18:45", endTime: "19:00", team1: ["nauris", "rudolfs"], team2: ["artjoms", "markuss"] },
+  { id: "round-8-court-2", roundNumber: 8, courtNumber: 2, startTime: "18:45", endTime: "19:00", team1: ["juris", "roberts"], team2: ["regnars", "atis"] },
+  { id: "round-8-court-3", roundNumber: 8, courtNumber: 3, startTime: "18:45", endTime: "19:00", team1: ["davis", "gints"], team2: ["martins", "emilija"] },
+  { id: "round-8-court-4", roundNumber: 8, courtNumber: 4, startTime: "18:45", endTime: "19:00", team1: ["ulvis", "edgars"], team2: ["maris", "pavels"] },
 
 ];
 
